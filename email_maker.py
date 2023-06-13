@@ -2,15 +2,17 @@ import sys
 
 
 # Check if the required arguments are provided
-if len(sys.argv) < 4:
+if len(sys.argv) < 5:
     print("Please provide the paths of the first names and last names text files as command-line arguments.")
     print("Please provide the domain used for the emails. ")
-    print("Example usage: python3 email_maker.py /path/to/first_names.txt /path/to/last_names.txt " "email.com")
+    print("Please provide a name for your new out put file. ")
+    print("Example usage: python3 email_maker.py /path/to/first_names.txt /path/to/last_names.txt email.com new_list.txt")
     sys.exit(1)
 
 first_names_file = sys.argv[1]
 last_names_file = sys.argv[2]
 email_domain = sys.argv[3]
+output_file = sys.argv[4]
 
 # Read first names from the specified text file
 with open(first_names_file, 'r') as f:
@@ -26,5 +28,10 @@ for first_name in first_names_file:
         email = f"{first_name.lower()}.{last_name.lower()}@{email_domain}"
         email_addresses.append(email)
 
-for email in email_addresses:
-    print(email)
+
+# Saving the new email list
+with open(output_file, 'w') as f:
+    for email in email_addresses:
+        f.write(email + '\n')
+
+print(f"Email addresses saved to {output_file}")
